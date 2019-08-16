@@ -1,0 +1,10 @@
+[
+    {
+        "fonts": [
+            {
+                "asset": "fonts/MaterialIcons.ttf"
+            }
+        ],
+        "family": "MaterialIcons"
+    }
+]
