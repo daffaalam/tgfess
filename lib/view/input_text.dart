@@ -7,6 +7,7 @@ class InputText extends StatelessWidget {
   final int maxLength;
   final int maxLines;
   final bool enable;
+  final bool notNull;
   final String label;
   final String help;
 
@@ -15,7 +16,8 @@ class InputText extends StatelessWidget {
     this.inputType,
     this.maxLength,
     this.maxLines,
-    this.enable,
+    this.enable = true,
+    this.notNull = false,
     this.label,
     this.help,
   });
@@ -32,7 +34,8 @@ class InputText extends StatelessWidget {
         enabled: enable,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
-          labelText: label,
+          labelText: notNull ? '$label *' : label,
+          labelStyle: notNull ? TextStyle(color: Colors.red) : null,
           alignLabelWithHint: true,
           helperText: help,
         ),

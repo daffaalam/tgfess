@@ -5,6 +5,7 @@ import 'package:telegram_menfess/model/req_message.dart';
 import 'package:telegram_menfess/model/res_message.dart';
 import 'package:telegram_menfess/tool/api_client.dart';
 import 'package:telegram_menfess/tool/config.dart';
+import 'package:telegram_menfess/tool/fun.dart';
 import 'package:telegram_menfess/view/input_text.dart';
 
 class SendMessageView extends StatefulWidget {
@@ -20,45 +21,27 @@ class SendMessageViewState extends State<SendMessageView> {
   ResMessage resMessage;
   bool preview = true;
 
-  onError(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Pesan Gagal Terkirim.'),
-          content: Text(message),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   sendMessage() async {
-    setState(() {
-      editable = false;
-    });
-    reqMessage = ReqMessage(
-      chatId: '@${Config.username}',
-      text: controllerText.text,
-      disableWebPagePreview: '$preview',
-    );
-    resMessage = await ApiClient.sendMessage(
-      body: reqMessage.toMap(),
-    );
-    setState(() {
-      editable = true;
-    });
-    if (resMessage.ok) {
-      window.open(Config.urlChannel, Config.appTitle);
-    } else {
-      onError(resMessage.description);
+    if (controllerUsername.text.isNotEmpty && controllerText.text.isNotEmpty) {
+      setState(() {
+        editable = false;
+      });
+      reqMessage = ReqMessage(
+        chatId: '@${Config.username}',
+        text: controllerText.text,
+        disableWebPagePreview: '$preview',
+      );
+      resMessage = await ApiClient.sendMessage(
+        body: reqMessage.toMap(),
+      );
+      setState(() {
+        editable = true;
+      });
+      if (resMessage.ok) {
+        window.open(Config.urlChannel, Config.appTitle);
+      } else {
+        Fun.onError(context, 'Gagal Terkirim.', resMessage.description);
+      }
     }
   }
 
@@ -71,6 +54,7 @@ class SendMessageViewState extends State<SendMessageView> {
           controller: controllerUsername,
           inputType: TextInputType.text,
           maxLines: 1,
+          notNull: true,
           enable: editable,
           label: 'Username Telegram',
         ),
@@ -78,6 +62,7 @@ class SendMessageViewState extends State<SendMessageView> {
           controller: controllerText,
           inputType: TextInputType.multiline,
           maxLines: 5,
+          notNull: true,
           enable: editable,
           label: 'Message',
         ),
