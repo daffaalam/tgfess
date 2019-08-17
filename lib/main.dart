@@ -13,13 +13,18 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String timeNow = DateFormat.H().format(Config.now);
   ThemeData themeTime;
+  Brightness brightness;
   int recentIndex = 0;
 
   @override
   void initState() {
-    int.parse(timeNow) <= 6 && int.parse(timeNow) > 18
-        ? themeTime = ThemeData.light()
-        : themeTime = ThemeData.dark();
+    if (int.parse(timeNow) >= 6 && int.parse(timeNow) < 18) {
+      themeTime = ThemeData.light();
+      brightness = Brightness.dark;
+    } else {
+      themeTime = ThemeData.dark();
+      brightness = Brightness.light;
+    }
     super.initState();
   }
 
@@ -46,7 +51,7 @@ class _MyAppState extends State<MyApp> {
             itemBuilder: (BuildContext context, int index) {
               if (index == 0) {
                 return Container(
-                  color: ThemeData().primaryColorDark,
+                  color: ThemeData(brightness: brightness).primaryColorLight,
                   child: DrawerHeader(
                     child: Image.network('https://telegram.org/img/t_logo.png'),
                   ),
