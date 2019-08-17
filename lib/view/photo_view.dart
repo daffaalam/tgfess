@@ -17,6 +17,7 @@ class _SendPhotoViewState extends State<SendPhotoView> {
   TextEditingController controllerUsername = TextEditingController();
   TextEditingController controllerUrlPhoto = TextEditingController();
   TextEditingController controllerCaption = TextEditingController();
+  TextEditingController controllerReply = TextEditingController();
   bool editable = true;
   ReqPhoto reqPhoto;
   ResPhoto resPhoto;
@@ -31,6 +32,7 @@ class _SendPhotoViewState extends State<SendPhotoView> {
         chatId: '@${Config.username}',
         photo: controllerUrlPhoto.text,
         caption: controllerCaption.text,
+        reply_to_message_id: controllerReply.text,
       );
       resPhoto = await ApiClient.sendPhoto(
         body: reqPhoto.toMap(),
@@ -73,6 +75,14 @@ class _SendPhotoViewState extends State<SendPhotoView> {
           maxLines: 5,
           enable: editable,
           label: 'Caption',
+        ),
+        InputText(
+          controller: controllerReply,
+          inputType: TextInputType.number,
+          maxLines: 1,
+          enable: editable,
+          label: 'ID Pesan',
+          help: 'id pesan yang ingin di reply',
         ),
         RaisedButton.icon(
           icon: Icon(editable ? Icons.send : Icons.close),

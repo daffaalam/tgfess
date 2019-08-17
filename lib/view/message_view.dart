@@ -16,6 +16,7 @@ class SendMessageView extends StatefulWidget {
 class SendMessageViewState extends State<SendMessageView> {
   TextEditingController controllerUsername = TextEditingController();
   TextEditingController controllerText = TextEditingController();
+  TextEditingController controllerReply = TextEditingController();
   bool editable = true;
   ReqMessage reqMessage;
   ResMessage resMessage;
@@ -30,6 +31,7 @@ class SendMessageViewState extends State<SendMessageView> {
         chatId: '@${Config.username}',
         text: controllerText.text,
         disableWebPagePreview: '$preview',
+        reply_to_message_id: controllerReply.text,
       );
       resMessage = await ApiClient.sendMessage(
         body: reqMessage.toMap(),
@@ -65,6 +67,14 @@ class SendMessageViewState extends State<SendMessageView> {
           notNull: true,
           enable: editable,
           label: 'Message',
+        ),
+        InputText(
+          controller: controllerReply,
+          inputType: TextInputType.number,
+          maxLines: 1,
+          enable: editable,
+          label: 'ID Pesan',
+          help: 'id pesan yang ingin di reply',
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 8),

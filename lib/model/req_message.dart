@@ -5,12 +5,14 @@ class ReqMessage {
   String text;
   String parseMode;
   String disableWebPagePreview;
+  String reply_to_message_id;
 
   ReqMessage({
     this.chatId,
     this.text,
     this.parseMode = 'markdown',
     this.disableWebPagePreview = 'true',
+    this.reply_to_message_id,
   });
 
   factory ReqMessage.fromJson(String str) =>
@@ -25,6 +27,9 @@ class ReqMessage {
         disableWebPagePreview: json["disable_web_page_preview"] == null
             ? null
             : json["disable_web_page_preview"],
+        reply_to_message_id: json["reply_to_message_id"] == null
+            ? null
+            : json["reply_to_message_id"],
       );
 
   Map<String, dynamic> toMap() => {
@@ -33,5 +38,7 @@ class ReqMessage {
         "parse_mode": parseMode == null ? null : parseMode,
         "disable_web_page_preview":
             disableWebPagePreview == null ? null : disableWebPagePreview,
+        "reply_to_message_id":
+            reply_to_message_id == null ? null : reply_to_message_id,
       };
 }
