@@ -1,17 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="Telegram Mention Confess">
-  <meta name="keywords" content="Flutter, Telegram, Menfess, Mention, Confess">
-  <meta name="author" content="@tgfess">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@tgfess</title>
-  <script defer src="main.dart.js" type="application/javascript"></script>
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Telegram Mention Confess (@tgfess)">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Telegram Mention Confess">
+  <link rel="apple-touch-icon" href="icons/Icon-128.png">
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+  <title>Telegram Mention Confess</title>
+  <link rel="manifest" href="manifest.json">
 </head>
-
 <body>
+  <style class="progress">
+    #loader {
+      width: 50%;
+      margin: 25%;
+      text-align: center;
+    }
+  </style>
+  <progress class="progress" id="loader">loading...</progress>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('flutter_service_worker.js');
+      });
+    }
+  </script>
+  <script src="main.dart.js" type="application/javascript"></script>
 </body>
-
 </html>
